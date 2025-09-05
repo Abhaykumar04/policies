@@ -1,0 +1,121 @@
+[
+  {
+    "id": "insecure-random",
+    "name": "Insecure Random Generator",
+    "regex": "random\\.(randint|choice|random)\\s*\\(",
+    "description": "Use of random functions for security purposes. Use 'secrets' or 'os.urandom' instead.",
+    "severity": "HIGH"
+  },
+  {
+    "id": "jwt-no-verification",
+    "name": "JWT Without Signature Verification",
+    "regex": "jwt\\.decode\\(.*(verify=False|options\\s*=\\s*\\{.*verify_signature.*False).*\\)",
+    "description": "JWT tokens are being decoded without verifying the signature, which allows forgery.",
+    "severity": "HIGH"
+  },
+  {
+    "id": "command-injection-risk",
+    "name": "Command Execution - Injection Risk",
+    "regex": "(os\\.system|subprocess\\.Popen|subprocess\\.call)\\(",
+    "description": "Direct use of command execution can lead to injection vulnerabilities.",
+    "severity": "CRITICAL"
+  },
+  {
+    "id": "open-redirect-flask",
+    "name": "Open Redirect (Flask)",
+    "regex": "redirect\\(.*request\\.args\\.get\\(.*\\)\\)",
+    "description": "Redirecting users based on unsanitized input can lead to phishing attacks.",
+    "severity": "HIGH"
+  },
+  {
+    "id": "pickle-deserialization",
+    "name": "Unsafe Deserialization - Pickle",
+    "regex": "pickle\\.loads?\\(",
+    "description": "Using pickle on untrusted input can lead to arbitrary code execution.",
+    "severity": "CRITICAL"
+  },
+  {
+    "id": "missing-csrf",
+    "name": "Missing CSRF Protection",
+    "regex": "@app\\.route\\(.*methods=\\[.*POST.*\\]\\)",
+    "description": "POST routes are defined without CSRF protection decorators.",
+    "severity": "HIGH"
+  },
+  {
+    "id": "logging-sensitive-info",
+    "name": "Logging Sensitive Data",
+    "regex": "logger\\..*\\([\"'].*(password|ssn|credit_card).*[\"']\\)",
+    "description": "Sensitive data is being logged. Avoid logging passwords, SSNs, or credit cards.",
+    "severity": "HIGH"
+  },
+  {
+    "id": "unrestricted-file-upload",
+    "name": "Unrestricted File Upload",
+    "regex": "file\\.save\\(.*file\\.filename.*\\)",
+    "description": "No checks for file type, size, or extension before saving uploaded file.",
+    "severity": "CRITICAL"
+  },
+  {
+    "id": "wildcard-cors",
+    "name": "Wildcard CORS Policy",
+    "regex": "CORS\\(.*origins=[\"']\\*[\"']",
+    "description": "Using wildcard CORS headers allows any domain to access the API.",
+    "severity": "MEDIUM"
+  },
+  {
+    "id": "debug-mode-exposed",
+    "name": "Flask Debug Mode Enabled",
+    "regex": "app\\.run\\(.*debug=True.*\\)",
+    "description": "Flask app is running in debug mode, which exposes sensitive errors.",
+    "severity": "HIGH"
+  },
+  {
+    "id": "hardcoded-secret",
+    "name": "Hardcoded Secret",
+    "regex": "(?i)(password|api_key)[\\s:=]+[\"']\\w{6,}[\"']",
+    "description": "Secrets such as passwords or API keys are hardcoded in the codebase.",
+    "severity": "HIGH"
+  },
+  {
+    "id": "weak-encryption-md5",
+    "name": "Weak Encryption - MD5",
+    "regex": "(?i)hashlib\\.md5\\s*\\(",
+    "description": "MD5 is considered insecure and vulnerable to collision attacks.",
+    "severity": "CRITICAL"
+  },
+  {
+    "id": "weak-encryption-sha1",
+    "name": "Weak Encryption - SHA1",
+    "regex": "(?i)hashlib\\.sha1\\s*\\(",
+    "description": "SHA1 is deprecated and should be replaced with SHA-256 or better.",
+    "severity": "HIGH"
+  },
+  {
+    "id": "strong-encryption-aes",
+    "name": "Strong Encryption - AES",
+    "regex": "(?i)(from\\s+Crypto|cryptography\\.fernet|AES\\.new\\()",
+    "description": "AES encryption usage detected. Review configuration and mode (avoid ECB).",
+    "severity": "INFO"
+  },
+  {
+    "id": "gdpr-ip-tracking",
+    "name": "GDPR IP Tracking",
+    "regex": "\"ip\":\\s*\"\\d{1,3}(\\.\\d{1,3}){3}\"",
+    "description": "Storing or tracking IP addresses may require user consent under GDPR.",
+    "severity": "MEDIUM"
+  },
+  {
+    "id": "gdpr-consent-required",
+    "name": "GDPR Consent Required",
+    "regex": "\"consent\":\\s*\"yes\"",
+    "description": "Ensure consent is properly obtained, recorded, and auditable under GDPR.",
+    "severity": "MEDIUM"
+  },
+  {
+    "id": "gdpr-data-retention",
+    "name": "GDPR Data Retention",
+    "regex": "\"data_retention\":\\s*\"\\d+[dmy]\"",
+    "description": "Data retention period must comply with GDPR principles of data minimization.",
+    "severity": "LOW"
+  }
+]
